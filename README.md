@@ -1,9 +1,11 @@
-# Universal Skills MCP Server
+# Universal Skills
 
-A Model Context Protocol (MCP) server that discovers and loads skill markdown files from prioritized directory locations, providing AI assistants access to domain-specific knowledge and workflows.
+A Model Context Protocol (MCP) server and CLI tool that discovers and loads skill markdown files from prioritized directory locations, providing AI assistants access to domain-specific knowledge and workflows.
 
 ## Features
 
+- **MCP Server**: Automatically discovers and serves skills to AI agents
+- **CLI Tool**: Install skills directly from GitHub repositories
 - **Automatic Discovery**: Scans multiple directories for skill files
 - **Priority Resolution**: Project-specific skills override global skills
 - **Case-Insensitive Matching**: Load skills by name regardless of case
@@ -17,7 +19,21 @@ A Model Context Protocol (MCP) server that discovers and loads skill markdown fi
 - Node.js 18.0.0 or higher
 - npm 8.0.0 or higher
 
-### Setup
+### Quick Install
+
+Install globally via npm:
+
+```bash
+npm install -g universal-skills
+```
+
+Or use with npx (no installation required):
+
+```bash
+npx universal-skills --help
+```
+
+### Manual Setup (for development)
 
 1. Clone or download this repository
 2. Install dependencies:
@@ -32,29 +48,80 @@ A Model Context Protocol (MCP) server that discovers and loads skill markdown fi
    npm run build
    ```
 
-### Installing in Your AI Agent
+## CLI Commands
 
-#### Codex
+### Start MCP Server
+
+Start the MCP server for use with AI agents:
+
+```bash
+universal-skills mcp
+```
+
+Or with npx:
+
+```bash
+npx universal-skills mcp
+```
+
+### Install Skills
+
+Install a skill from a GitHub repository:
+
+```bash
+# Interactive mode (prompts for all options)
+universal-skills install
+
+# With repository URL
+universal-skills install --repo https://github.com/user/repo
+
+# With all options
+universal-skills install --repo https://github.com/user/repo --repo-dir skills/my-skill --local-dir ~/.claude/skills
+```
+
+**Options:**
+- `--repo <url>` - GitHub repository URL (will prompt if not provided)
+- `--repo-dir <path>` - Subdirectory within the repository containing the skill (optional)
+- `--local-dir <path>` - Local installation directory (default: `~/.claude/skills`, will prompt if not provided)
+
+**How it works:**
+1. Clones the repository (shallow clone for speed)
+2. Reads `SKILL.md` and extracts the skill name from frontmatter
+3. Prompts for skill name if not found in frontmatter
+4. Copies the skill to your local skills directory
+5. Confirms before overwriting existing skills
+
+**Example:**
+
+```bash
+# Install a skill from a repository subdirectory
+universal-skills install \
+  --repo https://github.com/klaudworks/skills \
+  --repo-dir skills/postgres \
+  --local-dir ~/.claude/skills
+```
+
+## Configuring the MCP Server in AI Agents
+
+After installing universal-skills, you need to configure your AI agent to use the MCP server.
+
+### Codex
 
 Add the skills server to Codex using the MCP add command:
 
 ```bash
-codex mcp add universal-skills -- node /absolute/path/to/universal-skills/dist/index.js
+codex mcp add universal-skills -- npx universal-skills mcp
 ```
 
-Replace `/absolute/path/to/universal-skills` with the actual path to this repository.
-
-#### Claude Code
+### Claude Code
 
 Add the skills server to Claude Code using the MCP add command:
 
 ```bash
-claude mcp add --transport stdio universal-skills -- node /absolute/path/to/universal-skills/dist/index.js
+claude mcp add --transport stdio universal-skills -- npx universal-skills mcp
 ```
 
-Replace `/absolute/path/to/universal-skills` with the actual path to this repository.
-
-#### OpenCode
+### OpenCode
 
 Add the skills server to your OpenCode configuration by creating or editing an `opencode.json` file in your project root:
 
@@ -64,16 +131,28 @@ Add the skills server to your OpenCode configuration by creating or editing an `
   "mcp": {
     "universal-skills": {
       "type": "local",
-      "command": ["node", "/absolute/path/to/universal-skills/dist/index.js"],
+      "command": ["npx", "universal-skills", "mcp"],
       "enabled": true
     }
   }
 }
 ```
 
-Replace `/absolute/path/to/universal-skills` with the actual path to this npm package.
-
 For more information about configuring MCP servers in OpenCode, see the [OpenCode MCP documentation](https://opencode.ai/docs/mcp-servers/).
+
+### Manual Configuration
+
+If you installed universal-skills globally with `npm install -g`, you can use:
+
+```bash
+universal-skills mcp
+```
+
+For development or if you cloned the repository, use the direct path:
+
+```bash
+node /absolute/path/to/universal-skills/dist/index.js
+```
 
 ## How It Works
 
@@ -236,5 +315,10 @@ MIT
 
 ## Version
 
-1.0.0
+3.0.0
+
+## Breaking Changes in 3.0.0
+
+- The `skills-mcp-server` command has been replaced with `universal-skills mcp`
+- If you're upgrading from version 2.x, you'll need to update your AI agent configuration to use the new command
 
