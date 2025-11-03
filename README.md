@@ -1,14 +1,22 @@
 # Universal Skills
 
-**What?** A reimplementation of Claude's "Skills" feature that works for any coding agent supporting MCP.
+**Universal Skills** brings Anthropic's Skills feature to any AI coding agent that supports MCP. Skills are markdown files containing specialized knowledge that can be dynamically loaded into your agent's context only when needed.
 
-**Why?** Skills let you teach your AI assistant domain-specific knowledge, workflows, and best practices. Instead of repeating the same context in every conversation, package it once as a skill and have your agent load it automatically when needed.
+## What This Solves
 
-**How?** This package provides an MCP server that discovers skill markdown files from your local directories, and a CLI tool to install skills from GitHub repositories. Skills are simple markdown files with YAML frontmatter - no complex setup required.
+Instead of bloating your agent's context with all possible knowledge upfront, skills let you organize domain-specific information (git workflows, database schemas, API patterns, etc.) into separate files. Your agent automatically loads the right skill at the right time based on your prompt and the skill's description. This is super simple but works super well at the same time.
+
+**Example use case:** A project-specific git skill that knows your team's branch naming conventions, commit message format, and how to create pull requests using GitHub CLI—all loaded only when you're working with git.
+
+## How It Works
+
+I reverse-engineered Claude Code's skills implementation and reimplemented it using MCP. The result is functionally equivalent.
+
+## Why I built this
+
+A week ago, I reverse engineered Claude Code's skills. A day ago, I spotted this repo [openskills](https://github.com/numman-ali/openskills) which implemented the same functionality for other coding agents. Their approach works but has some shortcomings. More information in the [FAQ documentation](./docs/FAQ.md).
 
 ## Installation
-
-Configure your AI agent to use the universal-skills MCP server.
 
 ### Codex
 
@@ -28,7 +36,7 @@ claude mcp add --transport stdio universal-skills -- npx universal-skills mcp
 
 ### OpenCode
 
-Add the skills server to your OpenCode configuration by creating or editing an `opencode.json` file in your project root:
+Add the skills server to your OpenCode configuration by creating or editing the `opencode.json` file in your project root:
 
 ```json
 {
@@ -43,85 +51,14 @@ Add the skills server to your OpenCode configuration by creating or editing an `
 }
 ```
 
-For more information about configuring MCP servers in OpenCode, see the [OpenCode MCP documentation](https://opencode.ai/docs/mcp-servers/).
-
-### Manual Configuration
-
-You can also run the MCP server directly with npx (no installation required):
-
-```bash
-npx universal-skills mcp
-```
-
-Or if you installed globally:
-
-```bash
-universal-skills mcp
-```
-
-## CLI Commands
-
-### Start MCP Server
-
-Start the MCP server for use with AI agents:
-
-```bash
-npx universal-skills mcp
-```
-
-Or if installed globally:
-
-```bash
-universal-skills mcp
-```
-
-### Install Skills
-
-Install a skill from a GitHub repository:
-
-```bash
-# Interactive mode (prompts for all options)
-npx universal-skills install
-
-# With repository URL
-npx universal-skills install --repo https://github.com/user/repo
-
-# With all options
-npx universal-skills install --repo https://github.com/user/repo --repo-dir skills/my-skill --local-dir ~/.claude/skills
-```
-
-**Options:**
-- `--repo <url>` - GitHub repository URL (will prompt if not provided)
-- `--repo-dir <path>` - Subdirectory within the repository containing the skill (optional)
-- `--local-dir <path>` - Local installation directory (default: `~/.claude/skills`, will prompt if not provided)
-
-**How it works:**
-1. Clones the repository (shallow clone for speed)
-2. Reads `SKILL.md` and extracts the skill name from frontmatter
-3. Prompts for skill name if not found in frontmatter
-4. Copies the skill to your local skills directory
-5. Confirms before overwriting existing skills
-
-**Example:**
-
-```bash
-# Install a skill from a repository subdirectory
-npx universal-skills install \
-  --repo https://github.com/klaudworks/skills \
-  --repo-dir skills/postgres \
-  --local-dir ~/.claude/skills
-```
-
-## How It Works
-
-### Skill Directory Structure
+## Skill Directory Structure
 
 Skills are automatically discovered from four directories in priority order (first match wins):
 
 1. `yourproject/.agent/skills/` - Project-specific skills
-2. `~/.agent/skills/` - Global skills #TODO change this to come after .claude/skills
-3. `yourproject/.claude/skills/` - Project-specific skills
-4. `~/.claude/skills/` - Global skills
+2. `yourproject/.claude/skills/` - Project-specific skills
+3. `~/.claude/skills/` - Global skills
+4. `~/.agent/skills/` - Global skills
 
 Each skill is a directory containing a `SKILL.md` file:
 
@@ -135,7 +72,19 @@ Each skill is a directory containing a `SKILL.md` file:
 
 **Priority Resolution**: If the same skill name exists in multiple directories, the one from the higher priority directory wins. This allows you to override global skills with project-specific versions.
 
-### Creating Your First Skill
+## Download and install specific skills
+
+Install a skill from a GitHub repository:
+
+```bash
+# Interactive mode (prompts for all options)
+npx universal-skills install
+
+# With all options
+npx universal-skills install --repo https://github.com/user/repo --repo-dir skills/my-skill --local-dir ~/.claude/skills
+```
+
+## Creating Your First Skill
 
 1. Create a skill directory in any of the four locations:
 
@@ -166,10 +115,10 @@ Each skill is a directory containing a `SKILL.md` file:
 
 3. The skill will be automatically discovered within 30 seconds (or on server restart)
 
-**Required frontmatter fields:**
+**Required YAML frontmatter fields:**
 
 - `name`: Skill identifier (any characters allowed)
-- `description`: Brief description
+- `description`: Brief description that describes in which situation the skill should be loaded.
 
 Skills missing either field will be skipped during scanning.
 
@@ -179,7 +128,7 @@ Once installed, your AI agent will have access to the `skill` tool.
 
 ### Loading a Skill
 
-The agent will automatically load a skill when your request matches the skill's description. The specific output is agent-dependent.
+The agent will automatically load a skill when your request matches the skill's description.
 
 **Direct invocation:**
 The most direct way is to explicitly request a skill by name:
@@ -200,60 +149,3 @@ Once loaded, the agent has access to all knowledge in your skill. For example, a
 ## FAQ
 
 For frequently asked questions, see the [FAQ documentation](./docs/FAQ.md).
-
-## Troubleshooting
-
-### Skills not appearing
-
-1. **Verify directory structure**: Each skill must be in its own directory with a `SKILL.md` file
-
-   ```
-   ~/.agent/skills/my-skill/SKILL.md  ✓ Correct
-   ~/.agent/skills/my-skill.md        ✗ Incorrect
-   ```
-
-2. **Check frontmatter**: Both `name` and `description` are required
-
-   ```yaml
-   ---
-   name: my-skill
-   description: Brief description
-   ---
-   ```
-
-3. **Wait for refresh**: Skills are scanned every 30 seconds. For immediate detection, restart your AI agent.
-
-4. **Check logs**: The server logs to stderr. If using Claude Desktop, check the application logs.
-
-### Permission errors
-
-Ensure skill files and directories have read permissions:
-
-```bash
-chmod -R +r ~/.agent/skills/
-```
-
-### Server won't start
-
-1. **Check Node.js version**: Must be 18.0.0 or higher
-
-   ```bash
-   node --version
-   ```
-
-2. **Verify the command**: Ensure your AI agent config uses `npx universal-skills mcp`
-
-3. **Try reinstalling**: If using global install, try reinstalling the package
-
-   ```bash
-   npm install -g universal-skills
-   ```
-
-## Performance
-
-- **Lookup Time**: <100ms per skill invocation
-- **Discovery Time**: <1 second for initial scan
-- **Refresh Cycle**: 30 seconds (automatic)
-- **Memory Usage**: <10MB for typical skill count (<100 skills)
-- **Supported Skills**: Tested with up to 100 skills
-
