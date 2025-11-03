@@ -1,94 +1,14 @@
 # Universal Skills
 
-A Model Context Protocol (MCP) server and CLI tool that discovers and loads skill markdown files from prioritized directory locations, providing AI assistants access to domain-specific knowledge and workflows.
+**What?** A reimplementation of Claude's "Skills" feature that works for any coding agent supporting MCP.
 
-## Features
+**Why?** Skills let you teach your AI assistant domain-specific knowledge, workflows, and best practices. Instead of repeating the same context in every conversation, package it once as a skill and have your agent load it automatically when needed.
 
-- **MCP Server**: Automatically discovers and serves skills to AI agents
-- **CLI Tool**: Install skills directly from GitHub repositories
-- **Automatic Discovery**: Scans multiple directories for skill files
-- **Priority Resolution**: Project-specific skills override global skills
-- **Case-Insensitive Matching**: Load skills by name regardless of case
-- **Auto-Refresh**: Skills refresh every 30 seconds automatically
-- **Universal Compatibility**: Works with any MCP-compatible AI agent
+**How?** This package provides an MCP server that discovers skill markdown files from your local directories, and a CLI tool to install skills from GitHub repositories. Skills are simple markdown files with YAML frontmatter - no complex setup required.
 
 ## Installation
 
-### Prerequisites
-
-- Node.js 18.0.0 or higher
-- npm 8.0.0 or higher
-
-### Quick Install
-
-Install globally via npm:
-
-```bash
-npm install -g universal-skills
-```
-
-Or use with npx (no installation required):
-
-```bash
-npx universal-skills --help
-```
-
-## CLI Commands
-
-### Start MCP Server
-
-Start the MCP server for use with AI agents:
-
-```bash
-universal-skills mcp
-```
-
-Or with npx:
-
-```bash
-npx universal-skills mcp
-```
-
-### Install Skills
-
-Install a skill from a GitHub repository:
-
-```bash
-# Interactive mode (prompts for all options)
-universal-skills install
-
-# With repository URL
-universal-skills install --repo https://github.com/user/repo
-
-# With all options
-universal-skills install --repo https://github.com/user/repo --repo-dir skills/my-skill --local-dir ~/.claude/skills
-```
-
-**Options:**
-- `--repo <url>` - GitHub repository URL (will prompt if not provided)
-- `--repo-dir <path>` - Subdirectory within the repository containing the skill (optional)
-- `--local-dir <path>` - Local installation directory (default: `~/.claude/skills`, will prompt if not provided)
-
-**How it works:**
-1. Clones the repository (shallow clone for speed)
-2. Reads `SKILL.md` and extracts the skill name from frontmatter
-3. Prompts for skill name if not found in frontmatter
-4. Copies the skill to your local skills directory
-5. Confirms before overwriting existing skills
-
-**Example:**
-
-```bash
-# Install a skill from a repository subdirectory
-universal-skills install \
-  --repo https://github.com/klaudworks/skills \
-  --repo-dir skills/postgres \
-  --local-dir ~/.claude/skills
-```
-
-## Configuring the MCP Server in AI Agents
-
-After installing universal-skills, you need to configure your AI agent to use the MCP server.
+Configure your AI agent to use the universal-skills MCP server.
 
 ### Codex
 
@@ -137,6 +57,59 @@ Or if you installed globally:
 
 ```bash
 universal-skills mcp
+```
+
+## CLI Commands
+
+### Start MCP Server
+
+Start the MCP server for use with AI agents:
+
+```bash
+npx universal-skills mcp
+```
+
+Or if installed globally:
+
+```bash
+universal-skills mcp
+```
+
+### Install Skills
+
+Install a skill from a GitHub repository:
+
+```bash
+# Interactive mode (prompts for all options)
+npx universal-skills install
+
+# With repository URL
+npx universal-skills install --repo https://github.com/user/repo
+
+# With all options
+npx universal-skills install --repo https://github.com/user/repo --repo-dir skills/my-skill --local-dir ~/.claude/skills
+```
+
+**Options:**
+- `--repo <url>` - GitHub repository URL (will prompt if not provided)
+- `--repo-dir <path>` - Subdirectory within the repository containing the skill (optional)
+- `--local-dir <path>` - Local installation directory (default: `~/.claude/skills`, will prompt if not provided)
+
+**How it works:**
+1. Clones the repository (shallow clone for speed)
+2. Reads `SKILL.md` and extracts the skill name from frontmatter
+3. Prompts for skill name if not found in frontmatter
+4. Copies the skill to your local skills directory
+5. Confirms before overwriting existing skills
+
+**Example:**
+
+```bash
+# Install a skill from a repository subdirectory
+npx universal-skills install \
+  --repo https://github.com/klaudworks/skills \
+  --repo-dir skills/postgres \
+  --local-dir ~/.claude/skills
 ```
 
 ## How It Works
@@ -283,17 +256,4 @@ chmod -R +r ~/.agent/skills/
 - **Refresh Cycle**: 30 seconds (automatic)
 - **Memory Usage**: <10MB for typical skill count (<100 skills)
 - **Supported Skills**: Tested with up to 100 skills
-
-## License
-
-MIT
-
-## Version
-
-3.0.0
-
-## Breaking Changes in 3.0.0
-
-- The `skills-mcp-server` command has been replaced with `universal-skills mcp`
-- If you're upgrading from version 2.x, you'll need to update your AI agent configuration to use the new command
 
