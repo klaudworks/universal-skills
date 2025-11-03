@@ -2,19 +2,15 @@
 
 **Universal Skills** brings Anthropic's Skills feature to any AI coding agent that supports MCP. Skills are markdown files containing specialized knowledge that can be dynamically loaded into your agent's context only when needed.
 
-## What This Solves
+### What This Solves
 
 Instead of bloating your agent's context with all possible knowledge upfront, skills let you organize domain-specific information (git workflows, database schemas, API patterns, etc.) into separate files. Your agent automatically loads the right skill at the right time based on your prompt and the skill's description. This is super simple but works super well at the same time.
 
 **Example use case:** A project-specific git skill that knows your team's branch naming conventions, commit message format, and how to create pull requests using GitHub CLI—all loaded only when you're working with git.
 
-## How It Works
-
-I reverse-engineered Claude Code's skills implementation and reimplemented it using MCP. The result is functionally equivalent.
-
 ## Why I built this
 
-A week ago, I reverse engineered Claude Code's skills. A day ago, I spotted this repo [openskills](https://github.com/numman-ali/openskills) which implemented the same functionality for other coding agents. Their approach works but has some shortcomings. More information in the [FAQ documentation](./docs/FAQ.md).
+A week ago, I reverse engineered Claude Code's skills. A day ago, I spotted this repo [openskills](https://github.com/numman-ali/openskills) which implemented the same functionality for other coding agents. Their approach works but has some shortcomings. That's why I decided to build a functional equivalent to Claude Code's skills based on MCP. More information in the [FAQ documentation](./docs/FAQ.md).
 
 ## Installation
 
