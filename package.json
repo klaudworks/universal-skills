@@ -1,6 +1,6 @@
 {
   "name": "universal-skills",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "MCP server and CLI tool for discovering and installing skills from GitHub repositories",
   "type": "module",
   "main": "dist/index.js",
