@@ -1,6 +1,6 @@
 {
   "name": "universal-skills",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "MCP server that discovers and loads skill markdown files from prioritized directories",
   "type": "module",
   "main": "dist/index.js",
