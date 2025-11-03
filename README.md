@@ -33,21 +33,6 @@ Or use with npx (no installation required):
 npx universal-skills --help
 ```
 
-### Manual Setup (for development)
-
-1. Clone or download this repository
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Build the server:
-
-   ```bash
-   npm run build
-   ```
-
 ## CLI Commands
 
 ### Start MCP Server
@@ -142,16 +127,16 @@ For more information about configuring MCP servers in OpenCode, see the [OpenCod
 
 ### Manual Configuration
 
-If you installed universal-skills globally with `npm install -g`, you can use:
+You can also run the MCP server directly with npx (no installation required):
+
+```bash
+npx universal-skills mcp
+```
+
+Or if you installed globally:
 
 ```bash
 universal-skills mcp
-```
-
-For development or if you cloned the repository, use the direct path:
-
-```bash
-node /absolute/path/to/universal-skills/dist/index.js
 ```
 
 ## How It Works
@@ -283,19 +268,13 @@ chmod -R +r ~/.agent/skills/
    node --version
    ```
 
-2. **Rebuild the server**:
+2. **Verify the command**: Ensure your AI agent config uses `npx universal-skills mcp`
+
+3. **Try reinstalling**: If using global install, try reinstalling the package
 
    ```bash
-   npm run clean && npm run build
+   npm install -g universal-skills
    ```
-
-3. **Reinstall dependencies**:
-
-   ```bash
-   npm install
-   ```
-
-4. **Verify the path**: Ensure your AI agent config points to the correct `dist/index.js` path
 
 ## Performance
 
@@ -304,10 +283,6 @@ chmod -R +r ~/.agent/skills/
 - **Refresh Cycle**: 30 seconds (automatic)
 - **Memory Usage**: <10MB for typical skill count (<100 skills)
 - **Supported Skills**: Tested with up to 100 skills
-
-## Contributing
-
-For development and contribution guidelines, see [CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
 ## License
 
