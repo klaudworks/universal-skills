@@ -1,6 +1,6 @@
 ---
 name: npm-publisher
-description: This skill should be used when the user wants to publish, release, or deploy an npm package. It handles the complete release workflow including staging changes, committing, version bumping, tagging, and pushing to trigger automated CI/CD publishing.
+description: This skill must be loaded via the skill tool when the user mentions anything related to publishing or release an npm package. It contains essential knowledge about the complete release workflow. Things a user might say are Publish the npm package,Release a new version,Deploy to npm,Create a new release,Bump the version and publish
 ---
 
 # NPM Publisher

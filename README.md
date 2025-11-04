@@ -16,7 +16,8 @@ A week ago, I reverse engineered Claude Code's skills. A day ago, I spotted this
 
 ## Installation
 
-### Codex
+<details>
+<summary><strong>Codex</strong></summary>
 
 Add the skills server to Codex using the MCP add command:
 
@@ -26,7 +27,10 @@ codex mcp add universal-skills -- npx universal-skills mcp
 
 <img width="660" height="573" alt="image" src="https://github.com/user-attachments/assets/8f0fb13b-1cbd-4552-917c-1b1c36d8180c" />
 
-### Claude Code
+</details>
+
+<details>
+<summary><strong>Claude Code</strong></summary>
 
 Add the skills server to Claude Code using the MCP add command:
 
@@ -36,8 +40,10 @@ claude mcp add --transport stdio universal-skills -- npx universal-skills mcp
 
 <img width="1298" height="462" alt="image" src="https://github.com/user-attachments/assets/1ffc36e0-0522-48fa-ab5c-871e0e206054" />
 
+</details>
 
-### OpenCode
+<details>
+<summary><strong>OpenCode</strong></summary>
 
 Add the skills server to your OpenCode configuration by creating or editing the `opencode.json` file in your project root:
 
@@ -58,10 +64,14 @@ For opencode I had to be quite explicit in instructing the agent to load a skill
 
 <img width="844" height="446" alt="image" src="https://github.com/user-attachments/assets/0b61967a-122e-4289-a0b1-a078f54c55cc" />
 
+</details>
 
-### Other Agents
+<details>
+<summary><strong>Other Agents</strong></summary>
 
 This should also work fine with Cursor and other Agent's that support MCP. Just not tested yet.
+
+</details>
 
 ## Skill Directory Structure
 
