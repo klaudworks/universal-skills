@@ -6,15 +6,22 @@
 
 import { Command } from "commander";
 import chalk from "chalk";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 import { mcpCommand } from "./commands/mcp.js";
 import { installCommand } from "./commands/install.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const packageJson = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf-8"));
 
 const program = new Command();
 
 program
   .name("universal-skills")
   .description("MCP server and CLI tool for discovering and installing skills")
-  .version("3.0.0");
+  .version(packageJson.version);
 
 // Register commands
 program
