@@ -130,6 +130,19 @@ export async function installCommand(options: InstallOptions) {
       process.exit(1);
     }
 
+    // Prompt for repository subdirectory if not provided
+    let repoDir = options.repoDir;
+    if (!repoDir) {
+      repoDir = await input({
+        message: "Repository subdirectory (optional, press Enter to skip):",
+        default: "",
+      });
+      // Convert empty string to undefined
+      if (!repoDir || repoDir.trim() === "") {
+        repoDir = undefined;
+      }
+    }
+
     // Prompt for local installation directory if not provided
     let localDir = options.localDir;
     if (!localDir) {
@@ -165,11 +178,11 @@ export async function installCommand(options: InstallOptions) {
 
       // Determine source path (with optional subdirectory)
       let sourcePath = tempDir;
-      if (options.repoDir) {
-        sourcePath = path.join(tempDir, options.repoDir);
+      if (repoDir) {
+        sourcePath = path.join(tempDir, repoDir);
 
         if (!(await directoryExists(sourcePath))) {
-          throw new Error(`Subdirectory '${options.repoDir}' not found in repository`);
+          throw new Error(`Subdirectory '${repoDir}' not found in repository`);
         }
       }
 

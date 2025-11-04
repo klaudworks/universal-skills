@@ -1,5 +1,9 @@
 # Universal Skills
 
+[![npm version](https://img.shields.io/npm/v/universal-skills.svg)](https://www.npmjs.com/package/universal-skills)
+[![npm downloads](https://img.shields.io/npm/dt/universal-skills.svg)](https://www.npmjs.com/package/universal-skills)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **Universal Skills** brings Anthropic's Skills feature to any AI coding agent that supports MCP. Skills are markdown files containing specialized knowledge that can be dynamically loaded into your agent's context only when needed.
 
 ### What This Solves
