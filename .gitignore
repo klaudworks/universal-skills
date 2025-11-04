@@ -142,6 +142,9 @@ vite.config.ts.timestamp-*
 opencode.json
 opencode.jsonc
 .claude/
-.agent/
+.agent/*
+!.agent/skills/
+.agent/skills/*
+!.agent/skills/npm-publisher/
 AGENTS.md
 CLAUDE.md
