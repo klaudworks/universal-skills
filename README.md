@@ -22,7 +22,7 @@ A week ago, I reverse engineered Claude Code's skills. A day ago, I spotted this
 Add the skills server to Codex using the MCP add command:
 
 ```bash
-codex mcp add universal-skills -- npx universal-skills mcp
+codex mcp add skills -- npx universal-skills mcp
 ```
 
 <img width="660" height="573" alt="image" src="https://github.com/user-attachments/assets/8f0fb13b-1cbd-4552-917c-1b1c36d8180c" />
@@ -35,7 +35,7 @@ codex mcp add universal-skills -- npx universal-skills mcp
 Add the skills server to Claude Code using the MCP add command:
 
 ```bash
-claude mcp add --transport stdio universal-skills -- npx universal-skills mcp
+claude mcp add --transport stdio skills -- npx universal-skills mcp
 ```
 
 <img width="1298" height="462" alt="image" src="https://github.com/user-attachments/assets/1ffc36e0-0522-48fa-ab5c-871e0e206054" />
@@ -51,7 +51,7 @@ Add the skills server to your OpenCode configuration by creating or editing the 
 {
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
-    "universal-skills": {
+    "skills": {
       "type": "local",
       "command": ["npx", "universal-skills", "mcp"],
       "enabled": true
