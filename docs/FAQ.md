@@ -40,14 +40,9 @@ Yes, I intercepted the traffic from Claude Code to Anthropic's API to verify tha
 <details>
 <summary>Why don't I just use openskills?</summary>
 
-### Discovery Method Issues
 - **Requires manual sync**: Users must run `openskills sync` CLI command every time they add a skill to get it discovered
-- **Not automatic**: Unlike Anthropic's implementation and universal-skills, it doesn't automatically discover skills on startup
 - **Relies on AGENTS.md**: Uses AGENTS.md for discovery rather than treating skills as native tools
-
-### System Prompt Injection Issues
-- **Injects into system prompt**: Simply injects all available skills into the system prompt
-- **Knowledge decay**: Anthropic injects available tools into each API request instead of into the AGENTS.md. The advantage is that the knowledge about your skills does not decay throughout the conversation.
+- **Knowledge decay**: openskills simply injects all available skills into the system prompt. Anthropic injects available tools into each API request instead of into the AGENTS.md. The advantage is that the knowledge about your skills does not decay throughout the conversation.
 
 When using universal-skills with Claude Code, it leads to the same API requests and responses to the Anthropic API as the native skill tool. A skill tool is injected into each API request, so the knowledge about available skills does not decay over time.
 
