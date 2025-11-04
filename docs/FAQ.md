@@ -4,7 +4,7 @@
 
 <details>
   
-<summary>What AI agents are supported?</summary>
+<summary>Which AI agents are supported?</summary>
 
 Universal Skills MCP Server works with any MCP-compatible AI agent, including:
 
