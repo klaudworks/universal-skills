@@ -31,6 +31,7 @@ New skills still require you to restart your agent.
   
 <summary>How does this differ from other approaches such as openskills?</summary>
 Openskills:
+
 - **Requires manual sync**: Users must run `openskills sync` CLI command every time they add a skill to get it discovered
 - **Relies on AGENTS.md**: Uses AGENTS.md for discovery rather than treating skills as native tools
 - **Knowledge decay**: openskills simply injects all available skills into the `AGENTS.md`. Anthropic injects available tools into each API request instead. The advantage is that the knowledge about your skills does not decay throughout the conversation.
