@@ -96,7 +96,7 @@ Each skill is a directory containing a `SKILL.md` file:
 
 ### Custom Skill Directories
 
-Add additional directories to recursively search for skills using `--skill-dir` (can be specified multiple times):
+Add additional directories to recursively search for skills using `--skill-dir` (can be specified multiple times). E.g. include skills installed via the Claude Code marketplace as follows. However, you can also install skills using `npx universal-skills install`. No benefit in using the Claude Code marketplace.
 
 ```bash
 codex mcp add skills -- npx universal-skills mcp --skill-dir ~/.claude/plugins
