@@ -10,8 +10,8 @@ import { SkillSource } from "./types.js";
 export const SKILL_DIRS: Array<{ path: string; source: SkillSource; location: "project" | "global" }> = [
   { path: "./.agent/skills", source: SkillSource.PROJECT_UNIVERSAL, location: "project" },
   { path: "./.claude/skills", source: SkillSource.PROJECT_CLAUDE, location: "project" },
-  { path: "~/.claude/skills", source: SkillSource.GLOBAL_CLAUDE, location: "global" },
   { path: "~/.agent/skills", source: SkillSource.GLOBAL_UNIVERSAL, location: "global" },
+  { path: "~/.claude/skills", source: SkillSource.GLOBAL_CLAUDE, location: "global" },
 ];
 
 /**
