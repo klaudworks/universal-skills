@@ -10,7 +10,7 @@ High-level:
 
 Example: Publishing an npm package
 
-I’ll walk you through the process I used to create the simple npm publisher skill in [.agent/skills/npm-publisher/SKILL.md](.agent/skills/npm-publisher/SKILL.md).
+I’ll walk you through the process I used to create the simple npm publisher skill in [.agent/skills/npm-publisher/SKILL.md](../.agent/skills/npm-publisher/SKILL.md).
 
 ### Prerequisites
 
