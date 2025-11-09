@@ -75,63 +75,19 @@ This should also work fine with Cursor and other Agent's that support MCP. Just 
 
 ## Updating
 
-When using `npx universal-skills mcp`, npx caches the package locally. Once cached, it will continue using that cached version even when newer versions are published to npm. Users will NOT automatically get the newest version.
-
-To update to the latest version of Universal Skills:
-
-### Option 1: Clear npx cache
+To update to the latest version:
 
 ```bash
+# Clear npx cache
 npx clear-npx-cache
-```
 
-Or manually remove the cache:
+# Or manually remove cache
+rm -rf ~/.npm/_npx-cache
 
-```bash
-rm -rf ~/.npm/_npx
-```
-
-### Option 2: Reinstall with @latest tag
-
-<details>
-<summary><strong>Codex</strong></summary>
-
-```bash
+# Reinstall with @latest tag
 codex mcp remove skills
 codex mcp add skills -- npx universal-skills@latest mcp
 ```
-
-</details>
-
-<details>
-<summary><strong>Claude Code</strong></summary>
-
-```bash
-claude mcp remove skills
-claude mcp add --transport stdio skills -- npx universal-skills@latest mcp
-```
-
-</details>
-
-<details>
-<summary><strong>OpenCode</strong></summary>
-
-Update your `opencode.json` to use the `@latest` tag:
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "mcp": {
-    "skills": {
-      "type": "local",
-      "command": ["npx", "universal-skills@latest", "mcp"],
-      "enabled": true
-    }
-  }
-}
-```
-
-</details>
 
 ## Skill Directory Structure
 
