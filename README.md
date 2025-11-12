@@ -135,3 +135,9 @@ npx universal-skills install --repo https://github.com/user/repo --repo-dir skil
 ## FAQ
 
 For frequently asked questions, see the [FAQ documentation](./docs/FAQ.md).
+
+## Troubleshooting
+
+You can run `npx universal-skills mcp` in the folder of your project. It will print out which directories were searched for skills and which skills were picked up.
+
+
