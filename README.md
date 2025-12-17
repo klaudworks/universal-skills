@@ -1,5 +1,8 @@
 # Universal Skills
 
+[![Run in Smithery](https://smithery.ai/badge/skills/klaudworks)](https://smithery.ai/skills?ns=klaudworks&utm_source=github&utm_medium=badge)
+
+
 [![npm version](https://img.shields.io/npm/v/universal-skills.svg)](https://www.npmjs.com/package/universal-skills)
 [![npm downloads](https://img.shields.io/npm/dt/universal-skills.svg)](https://www.npmjs.com/package/universal-skills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
