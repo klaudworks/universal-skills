@@ -1,3 +1,5 @@
+NOTE: Most agents support some form of skills by now so you may as well use the native implementations.
+
 # Universal Skills
 
 [![npm version](https://img.shields.io/npm/v/universal-skills.svg)](https://www.npmjs.com/package/universal-skills)
